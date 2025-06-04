@@ -15,9 +15,6 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private TaskRepository taskRepository;
 
 	
 	public User findById(Long id) {
@@ -33,9 +30,7 @@ public class UserService {
 		obj.setId(null);
 		
 		obj = this.userRepository.save(obj);
-		
-		this.taskRepository.saveAll(obj.getTasks());
-		
+				
 		return obj;
 	}
 	
@@ -54,7 +49,7 @@ public class UserService {
 		try {
 			this.userRepository.deleteById(id);
 		} catch (Exception e) {
-			throw new RuntimeException("Não é Possível Excluir, Pois há Entidades Relacionadas");
+			throw new RuntimeException("Não é Possível Excluir, Pois há Entidades Relacionadas!");
 		}
 	}
 }
