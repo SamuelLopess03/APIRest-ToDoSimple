@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -22,7 +23,7 @@ import jakarta.validation.constraints.Size;
 @Table(name = User.TABLE_NAME)
 public class User {
 	public interface CreateUser {}
-	public interface UpdatedUser {}
+	public interface UpdateUser {}
 	
 	public static final String TABLE_NAME = "user";
 	
@@ -39,9 +40,9 @@ public class User {
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name = "password", length = 60, nullable = false)
-	@NotNull(groups = { CreateUser.class, UpdatedUser.class })
-	@NotEmpty(groups = { CreateUser.class, UpdatedUser.class })
-	@Size(groups = { CreateUser.class, UpdatedUser.class }, min = 8, max = 60)
+	@NotNull(groups = { CreateUser.class, UpdateUser.class })
+	@NotEmpty(groups = { CreateUser.class, UpdateUser.class })
+	@Size(groups = { CreateUser.class, UpdateUser.class }, min = 8, max = 60)
 	private String password;
 	
 	@OneToMany(mappedBy = "user")
@@ -79,6 +80,7 @@ public class User {
 		this.password = password;
 	}
 
+	@JsonIgnore
 	public List<Task> getTasks() {
 		return tasks;
 	}
