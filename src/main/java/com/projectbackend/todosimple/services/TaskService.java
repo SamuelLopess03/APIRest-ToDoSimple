@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.projectbackend.todosimple.models.Task;
 import com.projectbackend.todosimple.models.User;
 import com.projectbackend.todosimple.repositories.TaskRepository;
+import com.projectbackend.todosimple.services.exceptions.DataBindingViolationException;
+import com.projectbackend.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TaskService {
@@ -23,7 +25,7 @@ public class TaskService {
 	public Task findById(Long id) {
 		Optional<Task> task = this.taskRepository.findById(id);
 		
-		return task.orElseThrow(() -> new RuntimeException(
+		return task.orElseThrow(() -> new ObjectNotFoundException(
 			"Task não Encontrada! Id: " + id + ", Tipo: " + Task.class.getName()
 		));
 	}
@@ -59,7 +61,7 @@ public class TaskService {
 		try {
 			this.taskRepository.deleteById(id);
 		} catch (Exception e) {
-			throw new RuntimeException("Não é Possível Excluir, Pois há Entidades Relacionadas!");
+			throw new DataBindingViolationException("Não é Possível Excluir, Pois há Entidades Relacionadas!");
 		}
 	}
 }
