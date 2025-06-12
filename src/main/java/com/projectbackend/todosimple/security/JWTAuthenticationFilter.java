@@ -1,7 +1,6 @@
 package com.projectbackend.todosimple.security;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +41,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		            		userCredentials.getPassword());
 						
 		    return getAuthenticationManager().authenticate(authToken);
-		} catch (Exception e) {
+		} catch (IOException e) {
 		    throw new RuntimeException("Erro ao tentar autenticar usuário", e);
 		}
 

@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.projectbackend.todosimple.security.JWTAuthenticationFilter;
+import com.projectbackend.todosimple.security.JWTAuthorizationFilter;
 import com.projectbackend.todosimple.security.JWTUtil;
 
 @Configuration
@@ -39,11 +40,16 @@ public class SecurityConfig {
 	@Autowired
 	private JWTUtil jwtUtil;
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http,
 			AuthenticationManager authenticationManager) throws Exception {
 	    JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter(
-	    		authenticationManager, jwtUtil);
+	    		authenticationManager, this.jwtUtil);
+	    JWTAuthorizationFilter jwtAuthorizationFilter = new JWTAuthorizationFilter(
+	    		authenticationManager, this.jwtUtil, this.userDetailsService);
 
 	    http
 	        .csrf(csrf -> csrf.disable())
@@ -53,7 +59,8 @@ public class SecurityConfig {
 	            .anyRequest().authenticated())
 	        .sessionManagement(session -> session
 	            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+	        .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
 	    return http.build();
 	}
