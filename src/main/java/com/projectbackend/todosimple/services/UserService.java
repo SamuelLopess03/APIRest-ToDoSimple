@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.projectbackend.todosimple.models.User;
+import com.projectbackend.todosimple.models.dtos.UserCreateDTO;
+import com.projectbackend.todosimple.models.dtos.UserUpdateDTO;
 import com.projectbackend.todosimple.models.enums.ProfileEnum;
 import com.projectbackend.todosimple.repositories.UserRepository;
 import com.projectbackend.todosimple.security.UserSpringSecurity;
 import com.projectbackend.todosimple.services.exceptions.AuthorizationException;
 import com.projectbackend.todosimple.services.exceptions.DataBindingViolationException;
 import com.projectbackend.todosimple.services.exceptions.ObjectNotFoundException;
+
+import jakarta.validation.Valid;
 
 @Service
 public class UserService {
@@ -80,5 +84,23 @@ public class UserService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public User fromDTO(@Valid UserCreateDTO dto) {
+		User user = new User();
+		
+		user.setUsername(dto.getUsername());
+		user.setPassword(dto.getPassword());
+		
+		return user;
+	}
+	
+	public User fromDTO(@Valid UserUpdateDTO dto) {
+		User user = new User();
+		
+		user.setId(dto.getId());
+		user.setPassword(dto.getPassword());
+		
+		return user;
 	}
 }

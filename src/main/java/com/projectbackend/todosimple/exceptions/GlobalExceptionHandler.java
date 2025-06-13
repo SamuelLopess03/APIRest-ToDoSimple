@@ -46,7 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.setContentType("application/json");
 		
 		ErrorResponse errorResponse = new ErrorResponse(status, 
-				"Email ou Senha Inválidos!");
+				"Username or Password are Invalid!");
 		
 		response.getWriter().append(errorResponse.toJson());
 	}

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.projectbackend.todosimple.models.Task;
+import com.projectbackend.todosimple.models.projections.TaskProjection;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
@@ -16,5 +17,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	//@Query(value = "SELECT * FROM Task t WHERE t.user_id = :id", nativeQuery = true)
 	//List<Task> findByUser_Id(@Param("id") Long id);
 	
-	List<Task> findByUser_Id(Long id);
+	List<TaskProjection> findByUser_Id(Long id);
 }
