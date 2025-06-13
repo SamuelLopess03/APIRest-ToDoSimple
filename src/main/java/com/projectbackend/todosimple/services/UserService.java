@@ -34,7 +34,7 @@ public class UserService {
 		
 		if(!Objects.nonNull(userSpringSecurity) || !userSpringSecurity.hasRole(ProfileEnum.ADMIN)
 				&& !id.equals(userSpringSecurity.getId()))
-			throw new AuthorizationException("Acesso Negado");
+			throw new AuthorizationException("Acesso Negado!");
 		
 		Optional<User> user = this.userRepository.findById(id);
 		
