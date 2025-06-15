@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.projectbackend.todosimple.controllers.TaskController;
+
 import com.projectbackend.todosimple.models.User;
 import com.projectbackend.todosimple.repositories.UserRepository;
 import com.projectbackend.todosimple.security.UserSpringSecurity;
